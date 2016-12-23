@@ -2,13 +2,14 @@
 	
 	session_start();
 	
-	if( ( (!isset($_SESSION['SESS_USERID'])) || (trim($_SESSION['SESS_USERID']) == '')) && ( (!isset($_SESSION['SESS_UNAME'])) || (trim($_SESSION['SESS_UNAME']) == '') )) {
+	if( ( (!isset($_SESSION['SESS_DIGEST'])) || (trim($_SESSION['SESS_DIGEST']) == '')) && ( (!isset($_SESSION['SESS_UNAME'])) || (trim($_SESSION['SESS_UNAME']) == '') ) && ( (!isset($_SESSION['SESS_USERID'])) || (trim($_SESSION['SESS_USERID']) == '') ) ) {
 		header("location: login.html");
 		exit();
 	};
 	
 		require_once('connecting.php');
-		$id=$_SESSION['SESS_USERID'];
+		
+		$id = ($_SESSION['SESS_USERID']);
 		$result3 = mysql_query("SELECT * FROM user where id='$id'");
 		$result4 = mysql_query("SELECT * FROM message where users_id='$id'");
 		$result5 = mysql_query("SELECT * FROM message_read where readers_id='$id'");
@@ -30,14 +31,16 @@
 </head>
 <body>
 	<div id = "header">
-		<h1 style = "font-size:60px; font-family:Tahoma;"> Home Page </h1> <a href="logout.php" style="float:right;"><button style="background-color: #4CAF50; border: none; color: white;
-    padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block;font-size: 16px;">Log Out</button></a>
+	
+		<h1 style = "font-size:60px; font-family:Tahoma;"> Home Page </h1> <a href="logout.php" style="float:right;"><button style="background-color: #4CAF50; border: none; 
+		color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block;font-size: 16px;">Log Out</button></a>
 		<br></br><br></br>
+		
 		<div style = "background-color:white; color:black; width = 100px; height = 50px;">
 			<h3>WELCOME BACK &nbsp!!!!!!!!!!</h3>
 		</div>
         <div style = "background-color:black; color:white; width = 100px; height = 50px;">
-			<h2><?= $uname; ?> </h2>
+			<h2><?= $_SESSION['SESS_UNAME']?> </h2>
 		</div>
      </div>
 	 
@@ -52,7 +55,7 @@
 				$result= mysql_query($sql) or die(mysql_error());
 					
 					echo '<body bgcolor="skyblue"> <center>';
-					echo'<table 	style="border: 5px solid red;">','<tr>','<th style="border:2px solid blue; margin:2px;"> &nbsp&nbsp Received From &nbsp&nbsp </th>','<th style="border:2px solid blue;">&nbsp&nbsp Subject &nbsp&nbsp </th>','<th style="border:2px solid blue;"> &nbsp&nbsp  Message &nbsp&nbsp </th>','</tr>';
+					echo'<table 	style="border: 5px solid red;">','<tr>','<th style="border:2px solid blue; margin:2px;"> &nbsp&nbsp Received From &nbsp&nbsp </th>','<th style="border:2px solid blue;  margin:2px;"> &nbsp&nbsp Subject &nbsp&nbsp </th>','<th style="border:2px solid blue;  margin:2px;"> &nbsp&nbsp  Message &nbsp&nbsp </th>','</tr>';
 				
 					while($row3=mysql_fetch_array($result)){	
 					$user_id=$row3['users_id'];
@@ -63,9 +66,13 @@
 					$result_again = mysql_query($sql_again) or die(mysql_error);
 						while($row_again = mysql_fetch_array($result_again))
 						{
-							$auname = $row_again['username'];
+							$buname = $row_again['username'];
 						}
-						
+							if (($_SESSION['SESS_UNAME'])== $buname){
+								$auname = "You";
+							}else{
+								$auname = $buname;
+							}
 					echo '<tr>','<td style="border-right:2px solid black; border-bottom:2px solid black; margin:2px;"> &nbsp&nbsp&nbsp&nbsp'.$auname. '&nbsp&nbsp&nbsp&nbsp</td>','&nbsp&nbsp&nbsp&nbsp <td style="border-right:2px solid black; border-bottom:2px solid black;"> '.$subject.'&nbsp&nbsp&nbsp&nbsp </td>&nbsp&nbsp&nbsp&nbsp ','&nbsp&nbsp&nbsp&nbsp <td style="border-bottom:2px solid black;"> &nbsp&nbsp&nbsp&nbsp '.$body.'&nbsp&nbsp&nbsp&nbsp  </td>','</tr>';
 					}
 						echo '</table>','<br>';
@@ -92,7 +99,12 @@
 					$result_again2 = mysql_query($sql_again2) or die(mysql_error);
 						while($row_again2 = mysql_fetch_array($result_again2))
 						{
-							$auname2 = $row_again2['username'];
+							$buname2 = $row_again2['username'];
+						}
+						if (($_SESSION['SESS_UNAME'])== $buname2){
+							$auname2 = "Yourself";
+						}else{
+							$auname2 = $buname2;
 						}
 						
 					echo '<tr>','<td style="border-right:2px solid black; border-bottom:2px solid black;"> &nbsp&nbsp&nbsp&nbsp'.$auname2. '&nbsp&nbsp&nbsp&nbsp</td>','&nbsp&nbsp&nbsp&nbsp <td style="border-right:2px solid black; border-bottom:2px solid black;">'.$subject2.'&nbsp&nbsp&nbsp&nbsp </td>&nbsp&nbsp&nbsp&nbsp ','&nbsp&nbsp&nbsp&nbsp <td style="border-bottom:2px solid black;"> &nbsp&nbsp&nbsp&nbsp '.$body2.'&nbsp&nbsp&nbsp&nbsp  </td>','</tr>';
@@ -114,8 +126,6 @@
 				
 		</fieldset>
 		</form>
-		
-		
 		
 	</div>
     <div id = "footer">

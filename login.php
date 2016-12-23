@@ -2,9 +2,11 @@
 	session_start();
 	include('connecting.php');
 
-		$theuname = $thepword = $hideval= $digest = $results = "";//$newsalt = $newdigest = $newtrack = "";
+		$theuname = $thepword = $hideval= $digest = $sql = $results = "";//$newsalt = $newdigest = $newtrack = "";
+  
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			
 			$theuname = test_input($_POST["username"]);
 			$thepword = test_input($_POST["password"]);
 			$hideval = test_input($_POST["hide"]);
@@ -27,21 +29,17 @@
 				header("Location: Homepage.php");
 				exit();
 			}else {
-				
 				include_once('login.html');
-				die("<br><br>Username or password invalid <br>PLease try again or GO BACK ");
+				die("<br><br>1)Username or password invalid <br>PLease try again or GO BACK ");
 				exit();
 			}
 		}else{
-			die("<br><br> Username or password invalid <br>PLease try again or GO BACK (<--");
-			header('login.html');
-			
-			
-		}
-		mysql_close($database);
+			die("<br><br> 2)Please enter a username and a password. <br>PLease try again or GO BACK (<--");
+			header('login.html');	
+		}	
+			mysql_close($database);
 		
-	}
-			
+	}	
 		function test_input($data) {
 			if (empty($data)) {
 				echo "missing data <br>";
@@ -55,4 +53,8 @@
 				return $data;
 			}
 		}
+		
+		//function signup(){
+			//include_once 'newuser.html';
+		//}
 ?>

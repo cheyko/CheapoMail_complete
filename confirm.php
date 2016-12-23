@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<?php
+				include('connecting.php');
+				$find = ("SELECT * FROM  user WHERE username = '$uname' AND password_digest = '$digest'");		
+			    $search = mysql_query($find);
+				$bingo = mysql_fetch_assoc($search);
+				$_SESSION['SESS_USERID'] = $bingo['id'];
+		        $_SESSION['SESS_UNAME'] = $uname; 
+				$_SESSION['SESS_DIGEST'] = $digest;
+?>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -12,11 +20,19 @@
         <h1>WELCOME !!!!!!!!!!</h1>
         <p>New User</p>
       </div>
+	  
+		<div id = "homapage">
+		<form name="newuser" action="Homepage.php">
+		<fieldset>
+	    <label><input type="submit" name="homepage" value="Go to Homepage"/> </label>
+		</fieldset>
+		</form>
+		</div>
+		
 		<hr>
 			<h3>You have officially created a new user to "AJAX" Cheapomail system </h3>
 			<h3> Below the horizontal rule are the details of the new user </h3>
 			<table class ="table1" > 
-	
 			<tr class = "header-row" >
 			<th class = "man"> First Name </th>  <th class = "man"> Last Name </th>  <th class = "man"> User Name </th> <th> Digest </th> 
 			</tr>
@@ -27,7 +43,6 @@
 			<!-- write php code to recieve all datafrom form database and print them in order -->
 			<td>   -   </td>  <td>     -    </td>  <td>      -      </td> <td class = "quan"> - </td>
 			</tr>
-			
 			</table>
 	
 		<hr>
