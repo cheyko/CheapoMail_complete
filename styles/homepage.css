@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-color:white;
+	font-size:13px;
+	font:Tahoma;
+	font-family:Tahoma;
+	color:black;
+	
+}
+
+#header {
+  background-color: #6f5499;
+  color: red;
+  padding: 25px;
+  margin-bottom: 20px;
+  text-align:center;
+  width:750px;
+  width: 50%;
+}   
+
+#footer {
+  margin-top: 20px;
+  text-align:right;
+  width:750px;
+}
+
+input[type=text] {
+    border: 2px solid blue;
+    border-radius: 4px;
+}
+form{
+	width:1000px;
+}
+
