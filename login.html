@@ -12,8 +12,9 @@
 <body>
 	<h1> WELCOME BACK ! </h1>
 	<div id = "logging">
-		<form name="logform"  method = "post" action="login.php" onsubmit="return checklog()" >
 		<fieldset>
+		<form name="logform"  method = "post" action="login.php" onsubmit="return checklog()">
+		
 		
 			<label> (Please enter your login information) <br></br></label>
 			
@@ -22,11 +23,14 @@
 			
 			<label> <input type = "hidden" name = "hide" value = "6eb6ac241942dc7226aeb" /> </label>
 			
-			<label> <input type="submit" value="Login"/> </label>
-			<!-- when this button is clicked the browser will attempt to log in/-->
-			
-		</fieldset>
+			<label> <input type="submit" value="Login"/>  </label>
 		</form>
+		
+		<form name="newuser" action="newuser.html">
+		 <label><input type="submit" name="signup" value="Sign-up" onclick="signup()" /> </label>
+		</form>
+		
+		</fieldset>
 		<div id = "copyright">
        <p class="text-muted"> AJAX GROUP ..... ("A" for Ariel, "J" for Jalan and "AX" for AleX)  <br> </br>INFO2180 Group Project Copyright &copy; 2016 </p>
 		</div>
